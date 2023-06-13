@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 
 @Component({
@@ -7,12 +7,12 @@ import { map, startWith } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent { 
-  public form = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    age: new FormControl(18),
-    subscribe: new FormControl(true),
+export class AppComponent {
+  public form = this._fb.group({
+    firstName: '',
+    lastName: '',
+    age: 18,
+    subscribe: true,
   });
 
   public formUpdate$ = this.form.valueChanges.pipe(
@@ -24,6 +24,8 @@ export class AppComponent {
       };
     })
   );
+
+  constructor(private _fb: FormBuilder) {}
 
   ngOnInit() {
     console.log(this.form.value);
